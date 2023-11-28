@@ -51,7 +51,7 @@ public class Payment {
     }
 
     public Map<String, Object> create(String txnID, Long amount, String callbackUrl, Map<String, Object> customerData,
-            Map<String, Object> udfData, ArrayList<String> paymentModes)
+            Map<String, Object> udfData, ArrayList<String> paymentModes,ArrayList<HashMap<String,Object>> product_list)
             throws Exception {
         Map<String, Object> requestBody = new LinkedHashMap<>();
         Map<String, Object> merchant_data = new LinkedHashMap<>();
@@ -68,16 +68,21 @@ public class Payment {
         requestBody.put("payment_data", paymentDataObject);
         Map<String, Object> txnObject = new LinkedHashMap<>();
         String paymentModesConcat = "";
+        Map<String,Integer> product_codes=this.productCodes();
+        
         for (int i = 0; i < paymentModes.size(); i++) {
-            paymentModesConcat = paymentModesConcat + paymentModes.get(i);
-            if (i < (paymentModes.size() - 1)) {
-                paymentModesConcat = paymentModesConcat + ",";
-            }
+        if(product_codes.containsKey(paymentModes.get(i))){
+        paymentModesConcat = paymentModesConcat + product_codes.get(paymentModes.get(i));
+        if (i < (paymentModes.size() - 1)) {
+        paymentModesConcat = paymentModesConcat + ",";
+        }
+        }
         }
         txnObject.put("navigation_mode", 2);
         txnObject.put("payment_mode", paymentModesConcat);
         txnObject.put("transaction_type", 1);
         requestBody.put("txn_data", txnObject);
+        requestBody.put("product_details", product_list);
         if (udfData != null) {
             requestBody.put("udf_data", udfData);
         }
@@ -110,6 +115,13 @@ public class Payment {
         return arr.entrySet().stream()
                 .filter(entry -> entry.getValue() != null && !entry.getValue().toString().isEmpty())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+    public Map<String,Integer> productCodes(){
+        HashMap<String,Integer> product_codes=new HashMap<>();
+        product_codes.put("cards",1);product_codes.put("netbanking",3);product_codes.put("emi",4);product_codes.put("upi",10);
+        product_codes.put("wallet",11);product_codes.put("debit_emi",14);product_codes.put("prebooking",16);product_codes.put("bnpl",17);
+        product_codes.put("cardless_emi",19);
+        return product_codes;
     }
 
     public Map<String, Object> fetch(String txnID, int txnType) throws Exception {

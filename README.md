@@ -72,7 +72,7 @@ shipping_data.put("address2","");shipping_data.put("address3","");shipping_data.
 shipping_data.put("state","");shipping_data.put("country","");
 customerData.put("billing_data",billing_data);customerData.put("shipping_data",shipping_data);
 ```
-Udf Data(Optional/Null)
+Udf Data(Optional)
 ```java
 //If no data point it to null like Map<String,Object> udf_data=null;
 Map<String,Object> udf_data=new TreeMap<String,Object>();
@@ -81,11 +81,20 @@ udf_data.put("udf_field_5","");
 ```
 Payment Modes(Mandatory)
 ```java
-String[] paymentModes=["4","3","1"];
+//Some modes might not be supported on keys that you'll provide for creating payment link! 
+String[] paymentModes=["cards","netbanking","emi","upi","cardless_emi","bnpl","debit_emi"];
 ```
+Product Details(Optional)
+```java
+ArrayList<HashMap<String,Object>> product_list=new ArrayList<>();
+HashMap<String,Object> products=new HashMap<String,Object>();
+products.put("product_code","testprod01");products.put("product_amount",500000);
+product_list.add(products);
+```
+
 Create a order 
 ```java
- Map<String,Object> paymentResponse = apiPayment.create(txnId, amount,merchant_return_url,customerData,udf_data,paymentModes);
+ Map<String,Object> paymentResponse = apiPayment.create(txnId, amount,merchant_return_url,customerData,udf_data,paymentModes,product_list);
  System.out.println(paymentResponse.toString());
 ```
 ### Response
@@ -128,9 +137,10 @@ Success Response
 #
 Amount(Mandatory)
 ```java
+//Total Amount which should match total amount value of Products
 Long amount=1000l;
 ```
-Product Details (Optional/Null)
+Product Details (Mandatory)
 ```java
 ArrayList<TreeMap<String,Object>> product_details=new ArrayList<TreeMap<String,Object>>();
 TreeMap<String,Object> products=new TreeMap<String,Object>();

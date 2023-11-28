@@ -5,6 +5,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -129,7 +130,8 @@ public class App {
           else{
           customerData=null;
           }
-          Map<String,Object> paymentResponse = obj.create(txnId, amount, merchant_return_url, customerData, null,list);
+          ArrayList<HashMap<String,Object>> product_list=new ArrayList<>();
+          Map<String,Object> paymentResponse = obj.create(txnId, amount, merchant_return_url, customerData, null,list,product_list);
           Object responseObject=paymentResponse.get("response");
           String jsonString=responseObject.toString();
           JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
