@@ -1,8 +1,7 @@
 # Java SDK
 
 ## Prerequisites
-- JDK version- 17/21
-- Maven version- 3.6.3/3.9.4
+- JDK version >=17 (Recommended)
 
 ## Basic Usage
 
