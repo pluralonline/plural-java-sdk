@@ -1,5 +1,9 @@
 # Java SDK
 
+Java Integration Guide: https://youtu.be/q_Gct5Haynw?si=dgUdgWy6KeKhXKrt
+
+Sample app: https://github.com/pluralonline/plural-java-sdk-sampleapp
+
 ## Prerequisites
 - JDK version >=17 (Recommended)
 
@@ -12,9 +16,9 @@ Supported Features
 - 3. EMI Calculator
 - 4. Hash Verification
 
-####  Only Non Seamless Integration Api Supported
+####  Only Non-Seamless Integration API Supported
 
-    This sdk only supports non seamless integration, which means that user will always need to redirect end users to payment gateways where they'll select their preferred payment method and finally complete payment.
+    This SDK only supports non-seamless integration, which means that merchants will always need to redirect end users to payment gateways where they'll select their preferred payment method and finally complete payment.
 
 API ENDPOINT :   
 ```java
@@ -39,7 +43,7 @@ boolean isTest=true; //false for production
  Payment apiPayment = api.payment();
  EMI emiCalculaor=api.emi();
 ```
- ## 1. Create Order Api
+ ## 1. Create Order API
 
 #### Body Parameters
 #
@@ -91,7 +95,7 @@ products.put("product_code","testprod01");products.put("product_amount",500000);
 product_list.add(products);
 ```
 
-Create a order 
+Create an order 
 ```java
  Map<String,Object> paymentResponse = apiPayment.create(txnId, amount,merchant_return_url,customerData,udf_data,paymentModes,product_list);
  System.out.println(paymentResponse.toString());
@@ -146,7 +150,7 @@ TreeMap<String,Object> products=new TreeMap<String,Object>();
 products.put("product_code","testprod01");products.put("product_amount",500000);
 product_details.add(products);
 ```
-Emi Calculator Method Call
+EMI Calculator Method Call
 ```Java
 Map<String,Object> emiResponse = emiCalculaor.emiCalculation(amount,product_details);
 System.out.println(emiResponse.toString());
@@ -162,7 +166,7 @@ Failure Response
 ```java
 {Exception:Invalid Data}
 ```
-## 4. Hash Verification Api
+## 4. Hash Verification API
 
 #### Body Parameters
 #
