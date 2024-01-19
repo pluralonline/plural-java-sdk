@@ -1,4 +1,4 @@
-![image](https://github.com/pluralonline/plural-java-sdk/assets/148333266/a31da78e-c455-4b6d-a544-95487ade8442)# Java SDK
+# Java SDK
 
 Java Integration Guide: https://youtu.be/q_Gct5Haynw?si=dgUdgWy6KeKhXKrt
 
@@ -196,7 +196,7 @@ Failure
 false
 ```
 
-#Integration Best Practices
+# Integration Best Practices
 
 Best practices to put into effect for a smooth and secure integration with Plural:
 
